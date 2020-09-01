@@ -125,7 +125,6 @@ def prepareForSendMail():
     totalLineItems = "100"
     titalQuantity = "100"
     BODY_HTML = render_template('reciveRFX.html', user_name=user_name, rfx_name=rfx_name, totalLineItems=totalLineItems, titalQuantity=titalQuantity)
-
     print('==============================')
     print(render_template('reciveRFX.html', user_name=user_name, rfx_name=rfx_name, totalLineItems=totalLineItems, titalQuantity=titalQuantity) )
     print('==============================')
