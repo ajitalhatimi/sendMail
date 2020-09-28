@@ -12,6 +12,15 @@ from flask import render_template
 import os
 
 SENDER = "Source.SupplyVan.com (AL HATIMI Trading LLC)<source@supplyvan.com>"
+
+# RECIPIENT = "ajit@alhatimi.com"
+
+# Specify a configuration set. If you do not want to use a configuration
+# set, comment the following variable, and the 
+# ConfigurationSetName=CONFIGURATION_SET argument below.
+# CONFIGURATION_SET = "ConfigSet"
+
+# If necessary, replace us-west-2 with the AWS Region you're using for Amazon SES.
 AWS_REGION = "us-east-1"
 app = Flask(__name__)
 app.config["DEBUG"] = True
@@ -33,6 +42,10 @@ CHARSET = "UTF-8"
 # Create a new SES resource and specify a region.
 client = boto3.client('ses',region_name=AWS_REGION)
 
+# @pyjade.register_filter('capitalize')
+# def capitalize(text,ast):
+#   return text.capitalize()
+  
 def sendMail(BODY_HTML, recipient):
     try:
         #Provide the contents of the email.
@@ -68,6 +81,7 @@ def sendMail(BODY_HTML, recipient):
         print("Email sent! Message ID:"),
         print(response['MessageId'])
 
+@app.route('/sendMail', methods=['POST'])
 def prepareForSendMail():
     request_json = request.json 
     # print('request_json = ', request_json)
@@ -93,11 +107,18 @@ def prepareForSendMail():
     except requests.exceptions.RequestException as err:
         print ("OOps: Something Else",err) 
 
+    # print("api Responce response.status_code : ", response.status_code)
     json_res = json.loads( response.text )
+    # print("api Responce response.response.text: ", json.loads( response.text ))
     # Try to send the email.
     recipient = []
     for x in json_res:
+        # print(' =========single obj mail = ',x["email"])  
         recipient.append(x["email"])  
+    # print("=========recipient = ",recipient)    
     sendMail(BODY_HTML, recipient)
     
     return "emails sent successfully to all related vendors!!"
+
+app.run()
+
