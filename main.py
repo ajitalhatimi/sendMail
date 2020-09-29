@@ -13,11 +13,8 @@ import os
 
 SENDER = "Source.SupplyVan.com (AL HATIMI Trading LLC)<source@supplyvan.com>"
 AWS_REGION = "us-east-1"
-app = Flask(__name__)
-app.config["DEBUG"] = True
-app.jinja_env.add_extension('pyjade.ext.jinja.PyJadeExtension')
 
-URL = 'https://user-service-dot-turing-terminus-224612.el.r.appspot.com/api/find-user-by-brand-category    
+URL = 'https://user-service-dot-turing-terminus-224612.el.r.appspot.com/api/find-user-by-brand-category'    
 # URL = 'http://localhost:2000/api/find-user-by-brand-category'    
 headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 
